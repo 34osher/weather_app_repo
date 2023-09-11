@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Use the path to your background image file */
+            background-image: url('https://scontent.ftlv1-1.fna.fbcdn.net/v/t31.18172-8/15625728_1794657574131160_5577605192232065717_o.jpg?_nc_cat=110&ccb=1-7&_nc_sid=c2f564&_nc_ohc=EC-g0plzOF8AX_7SeM4&_nc_oc=AQnernh23GcsvhLVtPjfL8pYZBdsImKemCtOC8IuTHCsX-Z6Eze9NYHO3s8JSOpNyKc&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfBrfaTsWsggfxG2qk0kgCZdL6dRbjDbCAYRLKEEnFhA3A&oe=6501AD46');
+            background-size: cover; /* Adjust background size to cover the entire body */
+            background-repeat: no-repeat; /* Prevent repeating the image */
+            background-color: #3498db; /* Fallback background color in case image is unavailable */
+        }
+        h1 {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Increased shadow */
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            background-color: transparent;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 10px; /* Rounded corners for table */
+            overflow: hidden; /* Hide overflow from rounded corners */
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        p.error {
+            color: red;
+            font-size: 30px
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Forecast</h1>
+    <div class="container">
+        <form method="POST" action="/">
+            <label for="location">Enter Location (City or Country):</label>
+            <input id="location" type="text" name="location" required>
+            <br>
+            <label for="search_type">Search Type:</label>
+            <input id="search_type" type="radio" name="search_type" value="city" checked> City
+            <input type="radio" name="search_type" value="country"> Country
+            <br>
+            <button type="submit">Get Forecast</button>
+        </form>
+
+        {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+        {% endif %}
+
+        {% if weather_data and not error_message %}
+        <h2>🌍  {{ weather_data['city_name'] }}, {{ weather_data['country_name'] }}</h2>
+        <table>
+            <tr>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Day Temperature</th>
+                <th>Night Temperature</th>
+                <th>Humidity</th>
+                <th>        </th>
+                <th>Wind Speed</th>
+            </tr>
+            {% for day in weather_data['data'] %}
+            <tr>
+                <td>{{ day['days_of_week'] }}</td>
+                <td>{{ day['valid_date'] }}</td>
+                <td>{{ day['day_temp'] }}°C</td>
+                <td>{{ day['night_temp'] }}°C</td>
+                <td>{{ day['humidity'] }}%</td>
+                <td><img src="{{ day['icon'] }}" width="40px" ></td>
+                <td>{{ day['wind_spd'] }}m/s</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
