@@ -100,14 +100,16 @@ pipeline {
 
         stage('Push to dockerhub') {
             steps {
-                sh 'echo "pushing to dockerhub..."'
+                script {
+                    sh 'echo "pushing to dockerhub..."'
 
-                def version = new Date().format("yyyy.MM.dd.HH.mm.ss")
-                echo "Build successful! Version: ${version}"
-                sh 'echo "Pushing the image to DockerHub..."'
-                sh 'docker login -u 34osher -p Osh753951'
-                sh "docker tag osher_weather_app_develop-flask_app 34osher/weather_app:${version}"
-                sh "docker push 34osher/weather_app:${version}"
+                    def version = new Date().format("yyyy.MM.dd.HH.mm.ss")
+                    echo "Build successful! Version: ${version}"
+                    sh 'echo "Pushing the image to DockerHub..."'
+                    sh 'docker login -u 34osher -p Osh753951'
+                    h "docker tag osher_weather_app_develop-flask_app 34osher/weather_app:${version}"
+                    sh "docker push 34osher/weather_app:${version}"
+                }
             }
             post {
                 failure {
