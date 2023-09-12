@@ -25,7 +25,7 @@ pipeline {
             steps {
                 // test
                 sh 'echo "unit test website_reachable..."'
-                sh 'python3 -m unittest unitest_web_reachable.py'
+                sh 'python3 unitest_web_reachable.py'
             }
         }
     }
