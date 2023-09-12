@@ -7,6 +7,13 @@ pipeline {
                 cleanWs()
             }
         }
+        
+        stage('Checkout')
+        {
+            steps {
+                checkout scmGit(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'my_gitlab', url: 'http://172.31.45.131/root/weather_app_repo.git']])
+            }
+        }
         stage('Build Project') {
             steps {
                 // Replace this with actual build commands for your project
