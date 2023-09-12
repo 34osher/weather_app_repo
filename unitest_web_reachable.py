@@ -5,7 +5,7 @@ import requests
 class TestWebsiteReachability(unittest.TestCase):
 
     def test_website_reachable(self):
-        response = requests.get('http://172.31.40.84')
+        response = requests.get('http://127.0.0.1')
         self.assertEqual(response.status_code, 200)
 
 
