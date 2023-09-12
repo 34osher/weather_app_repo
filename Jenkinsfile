@@ -32,14 +32,15 @@ pipeline {
     }
     post {
         success {
-            // Define post-build actions for a successful build
-            echo 'Build successful!'
-            $version=BUILDS_TODAY
-            sh 'echo "Pushing the image to DockerHub..."'
-            sh 'docker login -u 34osher -p Osh753951'
-            sh 'docker tag osher_weather_app_develop-flask_app 34osher/weather_app:$version'
-            sh 'docker push 34osher/weather_app:$version'
-
+        // Define post-build actions for a successful build
+            script {
+                def version = BUILDS_TODAY
+                echo "Build successful! Version: ${version}"
+                sh 'echo "Pushing the image to DockerHub..."'
+                sh 'docker login -u 34osher -p Osh753951'
+                sh "docker tag osher_weather_app_develop-flask_app 34osher/weather_app:${version}"
+                sh "docker push 34osher/weather_app:${version}"
+            }
         }
         failure {
             // Define actions to be taken if the build fails
