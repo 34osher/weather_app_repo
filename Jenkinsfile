@@ -16,9 +16,16 @@ pipeline {
         }
         stage('Build Project') {
             steps {
-                // Replace this with actual build commands for your project
+                // build the container
                 sh 'echo "Building your project..."'
-                sh 'docker compose up'
+                sh 'docker compose up -d'
+            }
+        }
+        stage('Testing') {
+            steps {
+                // test
+                sh 'echo "unit test website_reachable..."'
+                sh 'python3 -m unittest unitest_web_reachable.py'
             }
         }
     }
