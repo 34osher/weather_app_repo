@@ -34,7 +34,7 @@ pipeline {
         success {
         // Define post-build actions for a successful build
             script {
-                def version = BUILDS_TODAY
+                def version = new Date().format("yyyyMMddHHmmss")
                 echo "Build successful! Version: ${version}"
                 sh 'echo "Pushing the image to DockerHub..."'
                 sh 'docker login -u 34osher -p Osh753951'
