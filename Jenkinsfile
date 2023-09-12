@@ -18,7 +18,7 @@ pipeline {
             steps {
                 // Replace this with actual build commands for your project
                 sh 'echo "Building your project..."'
-                sh 'docker-compose up'
+                sh 'docker compose up'
             }
         }
     }
