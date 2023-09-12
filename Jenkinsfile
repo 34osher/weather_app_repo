@@ -36,8 +36,8 @@ pipeline {
             echo 'Build successful!'
             sh 'echo "Pushing the image to DockerHub..."'
             sh 'docker login -u 34osher -p Osh753951'
-            sh 'docker tag weather_app:1 34osher/weather_app1:2'
-            sh 'docker push 34osher/osher_repo:latest'
+            sh 'docker tag 34osher/flask_app:latest'
+            sh 'docker push 34osher/flask_app:latest'
 
         }
         failure {
