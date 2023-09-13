@@ -21,7 +21,7 @@ pipeline {
                         Build URL: ${env.BUILD_URL}
                         """
                         
-                        slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                        slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
                     }
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
                         Build URL: ${env.BUILD_URL}
                         """
                         
-                        slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                        slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
                     }
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
                         Build URL: ${env.BUILD_URL}
                         """
                         
-                        slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                        slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
                     }
                 }
             }
@@ -94,7 +94,7 @@ pipeline {
                         Build URL: ${env.BUILD_URL}
                         """
                         
-                        slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                        slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
                     }
                 }
             }
@@ -126,7 +126,7 @@ pipeline {
                         Build URL: ${env.BUILD_URL}
                         """
                         
-                        slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                        slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
                     }
                 }
             }
@@ -155,7 +155,7 @@ pipeline {
                 Build URL: ${env.BUILD_URL}
                 """
                 
-                slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
             }
         }
         failure {
@@ -171,7 +171,7 @@ pipeline {
                 Build URL: ${env.BUILD_URL}
                 """
                 
-                slackSend(channel: '#weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
+                slackSend(channel: 'weather-app', message: slackMessage, teamDomain: 'oshergang', tokenCredentialId: 'slack')
             }
 
         }
