@@ -4,6 +4,8 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 // Clean the workspace
+                sh 'docker compose down -v'
+                sh 'docker rmi -f $(docker images -aq)'
                 cleanWs()
             }
             post {
@@ -129,6 +131,15 @@ pipeline {
                 }
             }
         }
+        /* stage('Clean Workspace') {
+            steps {
+                // Clean the workspace
+                sh 'docker compose down -v'
+                sh 'docker rmi -f $(docker images -aq)'
+                cleanWs()
+            }
+        } */
+    
     }
     post {
         success {
