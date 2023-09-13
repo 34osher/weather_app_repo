@@ -1,0 +1,20 @@
+version: "3"
+services:
+  flask_app:
+    image: 34osher/weather_app:latest
+    networks:
+      - my_network
+
+  nginx:
+    depends_on:
+      - flask_app
+    image: nginx:latest
+    ports:
+      - "80:80"  # Map host port 80 to Nginx's port 80
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf  # Mount Nginx configuration
+    networks:
+      - my_network
+
+networks:
+  my_network:

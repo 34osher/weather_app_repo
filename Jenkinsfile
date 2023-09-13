@@ -105,7 +105,7 @@ pipeline {
                 script {
                     sh 'echo "pushing to dockerhub..."'
 
-                    def version = new Date().format("yyyy.MM.dd.HH.mm.ss")
+                    def version = new Date().format("yyyyMMddHHmm")
                     echo "Build successful! Version: ${version}"
                     sh 'echo "Pushing the image to DockerHub..."'
                     sh 'docker login -u 34osher -p Osh753951'
