@@ -137,7 +137,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'echo "Deploy on instance..."' 
-                sshagent(credentials: [sshUserPrivateKey(credentialsId: 'weather_app_instance', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {{
+                sshagent(credentials: [sshUserPrivateKey(credentialsId: 'weather_app_instance', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
                 sh 'rm -f /home/ubuntu/deploy/*'
                 sh 'scp ./deploy_compose/docker-compose.yaml ubuntu@172.31.42.205:/home/ubuntu/deploy/'
                 sh 'scp ./default.conf ubuntu@172.31.42.205:/home/ubuntu/deploy/'
