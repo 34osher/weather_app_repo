@@ -108,9 +108,12 @@ pipeline {
                     def version = new Date().format("yyyyMMddHHmm")
                     echo "Build successful! Version: ${version}"
                     sh 'echo "Pushing the image to DockerHub..."'
-                    sh 'docker login -u 34osher -p Osh753951'
-                    sh "docker tag osher_weather_app_develop-flask_app 34osher/weather_app:${version}"
-                    sh "docker push 34osher/weather_app:${version}"
+
+                    withCredentials([usernamePassword(credentialsId: 'doukerHub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                        sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
+                        sh "docker tag osher_weather_app_develop-flask_app 34osher/weather_app:${version}"
+                        sh "docker push 34osher/weather_app:${version}"
+                    }
                 }
             }
             post {
@@ -119,6 +122,34 @@ pipeline {
                         echo '+++++++ pushing to dockerhub fail!!! ++++++++'
                         def slackMessage = """
                         :white_check_mark: pushing to dockerhub Fail!
+
+                        Project: ${env.JOB_NAME}
+                        Build Number: ${env.BUILD_NUMBER}
+                        Commit: ${env.GIT_COMMIT}
+                        Build URL: ${env.BUILD_URL}
+                        """
+                    
+                        slackSend(channel: 'weather-app', message: slackMessage)
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo "Deploy on instance..."'
+                sshagent (credentials: "weather_app_instance") {
+                sh 'rm -f /home/ubuntu/deploy/*'
+                sh 'scp ./deploy_compose/docker-compose.yaml ubuntu@172.31.42.205:/home/ubuntu/deploy/'
+                sh 'scp ./default.conf ubuntu@172.31.42.205:/home/ubuntu/deploy/'
+                sh 'docker compose up -d --scale flask_app=2'    
+                }            
+            }
+            post {
+                failure {
+                    script {
+                        echo '+++++++ Deploy on instance fail!!! ++++++++'
+                        def slackMessage = """
+                        :white_check_mark: Deploy on instance Fail!
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
