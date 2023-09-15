@@ -34,7 +34,7 @@ pipeline {
             post {
                 failure {
                     script {
-                        echo '+++++++ Checkout fail!!! ++++++++'
+                        echo '+++++++  Checkout fail!!! ++++++++'
                         def slackMessage = """
                         :white_check_mark: Checkout fail!!! 
 
