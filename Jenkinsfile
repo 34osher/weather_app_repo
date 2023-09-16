@@ -114,7 +114,7 @@ pipeline {
 
                     withCredentials([usernamePassword(credentialsId: 'doukerHub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
                         sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
-                        sh "docker tag osher_weather_app_develop-flask_app 34osher/weather_app:${version}"
+                        sh "docker tag osher-flask_app 34osher/weather_app:${version}"
                         sh "docker push 34osher/weather_app:${version}"
                     }
                 }
