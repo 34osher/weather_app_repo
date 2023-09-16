@@ -4,8 +4,11 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 // Clean the workspace
-                sh 'docker compose down -v'
-                sh 'docker rmi -f $(docker images -aq)'
+                sh 'docker stop $(docker ps -aq) || echo "delete if ther is images"'
+                sh 'docker compose down -v || echo "delete if ther is images"'
+                sh 'docker rm -f $(docker ps -aq) || echo "delete if ther is images"'
+                sh 'docker rmi -f $(docker images -aq) || echo "delete if ther is images"'
+                sh 'docker system prune'
                 cleanWs()
             }
             post {
@@ -138,10 +141,14 @@ pipeline {
             steps {
                 sh 'echo "Deploy on instance..."' 
                 sshagent(credentials: ['weather_app_instance']) {
-                sh 'rm -f /home/ubuntu/deploy/*'
-                sh 'scp ./deploy_compose/docker-compose.yaml ubuntu@172.31.42.205:/home/ubuntu/deploy/'
-                sh 'scp ./default.conf ubuntu@172.31.42.205:/home/ubuntu/deploy/'
-                sh 'docker compose up -d --scale flask_app=2'    
+                    sh 'ssh ubuntu@172.31.42.205 "rm  -r -f /home/ubuntu/deploy/*"'
+
+                    sh 'scp ./deploy_compose/docker-compose.yaml ubuntu@172.31.42.205:/home/ubuntu/deploy/'
+                    sh 'scp ./deploy_compose/deploy_script.sh ubuntu@172.31.42.205:/home/ubuntu/deploy/'
+
+                    sh 'scp ./default.conf ubuntu@172.31.42.205:/home/ubuntu/deploy/'
+
+                    sh 'ssh ubuntu@172.31.42.205 "./deploy/deploy_script.sh"'  
                 }            
             }
             post {
@@ -162,14 +169,32 @@ pipeline {
                 }
             }
         }
-        /* stage('Clean Workspace') {
+        stage('Clean after deploy Workspace') {
             steps {
                 // Clean the workspace
                 sh 'docker compose down -v'
                 sh 'docker rmi -f $(docker images -aq)'
+                sh 'docker system prune'
                 cleanWs()
             }
-        } */
+            post {
+                failure {
+                    script {
+                        echo '+++++++ Clean after deploy fail!!! ++++++++'
+                        def slackMessage = """
+                        :white_check_mark: Clean after deploy fail!!! 
+
+                        Project: ${env.JOB_NAME}
+                        Build Number: ${env.BUILD_NUMBER}
+                        Commit: ${env.GIT_COMMIT}
+                        Build URL: ${env.BUILD_URL}
+                        """
+                        
+                        slackSend(channel: 'weather-app', message: slackMessage)
+                    }
+                }
+            }
+        }
     
     }
     post {
