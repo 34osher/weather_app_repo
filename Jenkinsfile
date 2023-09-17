@@ -12,7 +12,7 @@ pipeline {
                 sh 'docker compose down -v || echo "delete if ther is images"'
                 sh 'docker rm -f $(docker ps -aq) || echo "delete if ther is images"'
                 sh 'docker rmi -f $(docker images -aq) || echo "delete if ther is images"'
-                sh 'docker system prune'
+                sh 'docker system prune -y'
                 cleanWs()
             }
             post {
@@ -178,7 +178,7 @@ pipeline {
                 // Clean the workspace
                 sh 'docker compose down -v'
                 sh 'docker rmi -f $(docker images -aq)'
-                sh 'docker system prune'
+                sh 'docker system prune -y'
                 cleanWs()
             }
             post {
