@@ -5,7 +5,7 @@ COPY . /usr/src/app/
 
 WORKDIR /usr/src/app
 
-# RUN pip install --upgrade pip
+#  RUN pip install --upgrade pip
 RUN pip install gunicorn
 
 # install dependencies --no-cache-dir remove th __pyc
