@@ -145,8 +145,11 @@ pipeline {
             steps {
                 sh 'echo "Deploy on instance..."' 
                 sshagent(credentials: ['weather_app_instance']) {
+                    sh 'ssh ubuntu@172.31.42.205 "docker compose down -v"'
+                    sh 'ssh ubuntu@172.31.42.205 "docker system prune -af"'
+                    
                     sh 'ssh ubuntu@172.31.42.205 "rm  -r -f /home/ubuntu/deploy/*"'
-
+                    
                     sh 'scp ./deploy_compose/docker-compose.yaml ubuntu@172.31.42.205:/home/ubuntu/deploy/'
                     sh 'scp ./deploy_compose/deploy_script.sh ubuntu@172.31.42.205:/home/ubuntu/deploy/'
 
