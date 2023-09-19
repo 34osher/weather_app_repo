@@ -120,6 +120,9 @@ pipeline {
                         sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
                         sh "docker tag osher-flask_app 34osher/weather_app:${version}"
                         sh "docker push 34osher/weather_app:${version}"
+
+                        sh "docker tag osher-flask_app 34osher/weather_app:latest"
+                        sh "docker push 34osher/weather_app:latest"
                     }
                 }
             }
