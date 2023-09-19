@@ -8,9 +8,9 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 // Clean the workspace
-                sh 'docker stop $(docker ps -aq) || echo "delete if ther is images"'
+                //sh 'docker stop $(docker ps -aq) || echo "stop containers"'
                 sh 'docker compose down -v || echo "delete if ther is images"'
-                sh 'docker rm -f $(docker ps -aq) || echo "delete if ther is images"'
+                sh 'docker rm -f $(docker ps -aq) || echo "stop containers & delete"'
                 sh 'docker rmi -f $(docker images -aq) || echo "delete if ther is images"'
                 sh 'docker system prune -f'
                 cleanWs()
@@ -20,7 +20,7 @@ pipeline {
                     script {
                         echo '+++++++ Clean fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: Clean fail!!! 
+                        :bangbang: Clean fail!!! 
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -43,7 +43,7 @@ pipeline {
                     script {
                         echo '+++++++  Checkout fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: Checkout fail!!! 
+                        :bangbang: Checkout fail!!! 
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -68,7 +68,7 @@ pipeline {
                     script {
                         echo '+++++++ Builed fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: Builed fail!!! 
+                        :bangbang: Builed fail!!! 
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -93,7 +93,7 @@ pipeline {
                     script {
                         echo '+++++++ Test fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: Test Fail!
+                        :bangbang: Test Fail!
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -128,7 +128,7 @@ pipeline {
                     script {
                         echo '+++++++ pushing to dockerhub fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: pushing to dockerhub Fail!
+                        :bangbang: pushing to dockerhub Fail!
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -160,7 +160,7 @@ pipeline {
                     script {
                         echo '+++++++ Deploy on instance fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: Deploy on instance Fail!
+                        :bangbang: Deploy on instance Fail!
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -186,7 +186,7 @@ pipeline {
                     script {
                         echo '+++++++ Clean after deploy fail!!! ++++++++'
                         def slackMessage = """
-                        :white_check_mark: Clean after deploy fail!!! 
+                        :bangbang: Clean after deploy fail!!! 
 
                         Project: ${env.JOB_NAME}
                         Build Number: ${env.BUILD_NUMBER}
@@ -223,7 +223,7 @@ pipeline {
             script {
                 echo '+++++++ process FAILED !!! ++++++++'
                 def slackMessage = """
-                :white_check_mark: process FAILED !!!
+                :bangbang: process FAILED !!!
 
                 Project: ${env.JOB_NAME}
                 Build Number: ${env.BUILD_NUMBER}
