@@ -36,7 +36,7 @@ pipeline {
         
         stage('Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'my_gitlab', url: 'http://172.31.45.131/root/weather_app_repo.git']])
+                checkout scmGit(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'my_gitlab', url: 'http://172.31.33.137/root/weather_app_repo.git']])
             }
             post {
                 failure {
