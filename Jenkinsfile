@@ -177,33 +177,6 @@ pipeline {
                 }
             }
         }
-        // stage('Clean after deploy Workspace') {
-        //     steps {
-        //         // Clean the workspace
-        //         sh 'docker compose down -v'
-        //         sh 'docker rmi -f $(docker images -aq)'
-        //         sh 'docker system prune -af'
-        //         cleanWs()
-        //     }
-        //     post {
-        //         failure {
-        //             script {
-        //                 echo '+++++++ Clean after deploy fail!!! ++++++++'
-        //                 def slackMessage = """
-        //                 :bangbang: Clean after deploy fail!!! 
-
-        //                 Project: ${env.JOB_NAME}
-        //                 Build Number: ${env.BUILD_NUMBER}
-        //                 Commit: ${env.GIT_COMMIT}
-        //                 Build URL: ${env.BUILD_URL}
-        //                 """
-                        
-        //                 slackSend(channel: 'weather-app', message: slackMessage)
-        //             }
-        //         }
-        //     }
-        //}
-    
     }
     post {
         always {

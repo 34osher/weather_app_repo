@@ -1,4 +1,4 @@
-FROM python:3.11 AS build
+FROM python:3.11 
 
 # copy project
 COPY . /usr/src/app/
